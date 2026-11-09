@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07152f">
+  <meta name="description" content="Orbit Builders: a junior astronaut mission training game.">
+  <title>Orbit Builders | Junior Astronaut Mission Trainer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Orbit Builders home">
+        <span class="brand-mark">✦</span><span>ORBIT <b>BUILDERS</b></span>
+      </a>
+      <span class="top-tag">JUNIOR MISSION TRAINER</span>
+    </header>
+
+    <section id="welcome-screen" class="screen welcome-screen">
+      <div class="hero-art" aria-hidden="true">
+        <div class="planet planet-back"></div>
+        <div class="planet planet-main"></div>
+        <div class="orbit-ring"></div>
+        <div class="star star-one">✦</div><div class="star star-two">·</div>
+        <div class="star star-three">✧</div>
+        <div class="astronaut">👩‍🚀</div>
+        <div class="moon-rock"></div>
+      </div>
+      <div class="welcome-copy">
+        <p class="eyebrow">YOUR CREW IS COUNTING ON YOU</p>
+        <h1>Build a base.<br><span>Lead a mission.</span></h1>
+        <p class="intro">You are the mission commander. Make smart choices, protect your crew, and keep your space base running.</p>
+        <button id="start-button" class="button button-primary">Start Mission <span>→</span></button>
+        <p class="small-note">A learning game for explorers aged 10–16</p>
+      </div>
+      <div class="welcome-footer"><span>✦ THINK • PLAN • SURVIVE</span><span>GAME VALUES ARE ILLUSTRATIVE</span></div>
+    </section>
+
+    <section id="selection-screen" class="screen hidden">
+      <div class="section-heading">
+        <p class="eyebrow">MISSION CONTROL / 01</p>
+        <h2>Choose your destination</h2>
+        <p>Every base has different challenges. Choose where your crew will begin.</p>
+      </div>
+      <div class="mission-options">
+        <button class="mission-card moon-card" data-mission="moon">
+          <span class="mission-planet moon-visual" aria-hidden="true">🌕</span>
+          <span class="mission-label">MISSION 01</span>
+          <strong>Moon Base</strong>
+          <span class="mission-desc">Build a safe research base on the Moon. Watch your energy and supplies.</span>
+          <span class="choose-link">Choose Moon Base <b>→</b></span>
+        </button>
+        <button class="mission-card mars-card" data-mission="mars">
+          <span class="mission-planet mars-visual" aria-hidden="true">🪐</span>
+          <span class="mission-label">MISSION 02</span>
+          <strong>Mars Base</strong>
+          <span class="mission-desc">Support a crew on the Red Planet. Plan carefully for a distant outpost.</span>
+          <span class="choose-link">Choose Mars Base <b>→</b></span>
+        </button>
+      </div>
+      <button class="text-button" id="back-welcome">← Back</button>
+    </section>
+
+    <section id="game-screen" class="screen hidden">
+      <div class="game-heading">
+        <div>
+          <p class="eyebrow">MISSION IN PROGRESS</p>
+          <h2 id="base-title">Moon Base</h2>
+          <p id="base-subtitle" class="muted">Keep your crew safe and your base running.</p>
+        </div>
+        <div class="day-pill"><span>MISSION DAY</span><strong id="day-number">1</strong></div>
+      </div>
+
+      <div class="status-panel">
+        <div class="panel-title"><span>BASE STATUS</span><span class="live-dot">● LIVE</span></div>
+        <div class="resource-grid">
+          <div class="resource"><span class="resource-icon">🫁</span><span class="resource-name">Oxygen</span><strong id="oxygen-value">80</strong><div class="meter"><i id="oxygen-bar"></i></div></div>
+          <div class="resource"><span class="resource-icon">💧</span><span class="resource-name">Water</span><strong id="water-value">75</strong><div class="meter"><i id="water-bar"></i></div></div>
+          <div class="resource"><span class="resource-icon">🥫</span><span class="resource-name">Food</span><strong id="food-value">70</strong><div class="meter"><i id="food-bar"></i></div></div>
+          <div class="resource"><span class="resource-icon">⚡</span><span class="resource-name">Energy</span><strong id="energy-value">75</strong><div class="meter"><i id="energy-bar"></i></div></div>
+          <div class="resource health-resource"><span class="resource-icon">❤️</span><span class="resource-name">Crew Health</span><strong id="health-value">90</strong><div class="meter"><i id="health-bar"></i></div></div>
+        </div>
+        <p class="scale-note">Resource levels are game points from 0–100, not real engineering measurements.</p>
+      </div>
+
+      <div class="decision-heading">
+        <div><p class="eyebrow">COMMANDER'S CHOICES</p><h3>What will you do today?</h3></div>
+        <span class="choice-count" id="choice-count">Choose 1 action</span>
+      </div>
+      <div id="decision-grid" class="decision-grid">
+        <button class="decision-card" data-action="water"><span class="decision-icon">💧</span><span class="decision-copy"><strong>Conserve water</strong><small>Reuse water and fix small leaks.</small></span><span class="card-arrow">→</span></button>
+        <button class="decision-card" data-action="solar"><span class="decision-icon">☀️</span><span class="decision-copy"><strong>Repair solar panels</strong><small>Restore power for the base.</small></span><span class="card-arrow">→</span></button>
+        <button class="decision-card" data-action="food"><span class="decision-icon">🌱</span><span class="decision-copy"><strong>Grow food</strong><small>Start a small indoor food garden.</small></span><span class="card-arrow">→</span></button>
+        <button class="decision-card" data-action="shield"><span class="decision-icon">🛡️</span><span class="decision-copy"><strong>Improve radiation protection</strong><small>Make a safer shelter for the crew.</small></span><span class="card-arrow">→</span></button>
+      </div>
+      <div id="feedback" class="feedback hidden" role="status" aria-live="polite"></div>
+      <button id="next-day" class="button button-primary next-button" disabled>Next Day <span>→</span></button>
+      <p class="instruction">Choose one action each day. Your crew uses supplies every day, so plan ahead.</p>
+      <button id="quit-mission" class="text-button">End mission and choose again</button>
+    </section>
+
+    <section id="result-screen" class="screen result-screen hidden">
+      <div class="result-symbol" id="result-symbol">🏆</div>
+      <p class="eyebrow" id="result-eyebrow">MISSION COMPLETE</p>
+      <h2 id="result-title">Mission Success!</h2>
+      <p id="result-message" class="result-message"></p>
+      <div id="final-stats" class="final-stats"></div>
+      <button id="restart-button" class="button button-primary">Restart Mission <span>↻</span></button>
+      <button id="choose-again" class="text-button">Choose another base</button>
+    </section>
+
+    <footer class="site-footer">ORBIT BUILDERS <span>•</span> LEARN BY EXPLORING <span>•</span> NOT REAL NASA PREDICTIONS</footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+:root{--bg:#061329;--panel:#0c2040;--panel2:#10294e;--line:#25446b;--text:#f3f7ff;--muted:#a8bad4;--cyan:#62e5e8;--blue:#638cff;--gold:#ffc96b;--danger:#ff777e}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 75% 0%,#17345d 0,transparent 42%),var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
+button{font:inherit}
+.app-shell{width:min(100% - 32px,920px);margin:auto;min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12}
+.brand{display:flex;gap:9px;align-items:center;color:var(--text);text-decoration:none;font:700 14px 'Space Grotesk',sans-serif;letter-spacing:1.2px}
+.brand b{color:var(--cyan)}.brand-mark{font-size:24px;color:var(--cyan)}
+.top-tag,.eyebrow,.mission-label{font-size:10px;font-weight:800;letter-spacing:1.7px;color:var(--cyan)}
+.top-tag{color:#9fb4d2}
+.screen{padding:38px 0 28px;flex:1}.hidden{display:none!important}
+.welcome-screen{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:24px;min-height:610px;position:relative}
+.hero-art{height:390px;position:relative;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#102c54,#091a36);border:1px solid #31517a}
+.planet{position:absolute;border-radius:50%}.planet-back{width:90px;height:90px;background:#b7c7d9;top:42px;right:35px;opacity:.8;box-shadow:0 0 45px #a9c6ef66}
+.planet-main{width:220px;height:220px;background:linear-gradient(140deg,#e7e5d7,#8f9eae 70%);left:50%;top:115px;transform:translateX(-50%);box-shadow:inset -24px -15px 35px #53627a,0 0 65px #b6d2ff22}
+.planet-main:before,.planet-main:after{content:"";position:absolute;background:#7f8a9a66;border-radius:50%;width:38px;height:22px;top:50px;left:48px;transform:rotate(-20deg)}
+.planet-main:after{width:26px;height:17px;left:135px;top:130px}
+.orbit-ring{position:absolute;width:320px;height:100px;border:2px solid #65dce777;border-radius:50%;left:50%;top:185px;transform:translateX(-50%) rotate(-20deg)}
+.astronaut{position:absolute;font-size:86px;left:50%;top:205px;transform:translateX(-50%);filter:drop-shadow(0 10px 12px #0008)}
+.moon-rock{position:absolute;bottom:-40px;left:-20px;width:120%;height:100px;background:#75869b;border-radius:50% 50% 0 0;opacity:.35}
+.star{position:absolute;color:#fff;font-size:28px}.star-one{top:50px;left:50px}.star-two{top:140px;right:55px;font-size:40px}.star-three{bottom:85px;left:70px;color:var(--cyan)}
+.welcome-copy{padding:15px 8px}.welcome-copy h1,.section-heading h2,.game-heading h2,.result-screen h2{font:700 clamp(34px,5vw,54px)/1.08 'Space Grotesk',sans-serif;letter-spacing:-1.5px;margin:13px 0}
+.welcome-copy h1 span{color:var(--cyan)}.intro,.section-heading>p:last-child,.muted{color:var(--muted);line-height:1.7;max-width:440px}
+.button{border:0;border-radius:12px;padding:16px 22px;font-weight:800;cursor:pointer;min-height:54px;transition:transform .15s,filter .15s}
+.button:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.08)}
+.button-primary{background:linear-gradient(100deg,#54dfe3,#7b9dff);color:#06152e;box-shadow:0 9px 28px #4cdce533}
+.button span{font-size:20px;margin-left:20px}.welcome-copy .button{margin-top:15px;min-width:210px}
+.small-note,.scale-note,.instruction{font-size:11px;color:#8ea4c2}.small-note{margin-top:15px}
+.welcome-footer{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:space-between;color:#8ea4c2;font-size:9px;letter-spacing:1.3px;font-weight:700}
+.section-heading{text-align:center;margin:20px auto 35px}.section-heading h2{font-size:clamp(30px,5vw,42px)}
+.section-heading>p:last-child{margin:0 auto}
+.mission-options{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:720px;margin:auto}
+.mission-card{position:relative;text-align:left;padding:25px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#122b50,#0b1c38);color:var(--text);cursor:pointer;display:flex;flex-direction:column;min-height:310px;transition:.2s}
+.mission-card:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.mission-planet{font-size:62px;align-self:flex-end;height:82px;filter:drop-shadow(0 5px 15px #7aa9ff44)}
+.mission-label{color:#9bb4d5;font-size:9px;margin:12px 0 8px}.mission-card strong{font:700 25px 'Space Grotesk',sans-serif}
+.mission-desc{color:var(--muted);font-size:13px;line-height:1.6;margin-top:10px}
+.choose-link{margin-top:auto;padding-top:20px;color:var(--cyan);font-weight:800;font-size:12px}.choose-link b{float:right;font-size:18px}
+.text-button{display:block;border:0;background:none;color:#a9bdd8;padding:14px 0;cursor:pointer;font-weight:700}.text-button:hover{color:var(--cyan)}
+#back-welcome{margin:18px auto 0}
+.game-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}.game-heading h2{font-size:32px;margin:5px 0}.game-heading .eyebrow{margin:0}
+.day-pill{background:#132c50;border:1px solid #35547b;border-radius:14px;padding:10px 18px;text-align:center;min-width:90px}
+.day-pill span{display:block;font-size:8px;letter-spacing:1.2px;color:var(--muted);font-weight:800}.day-pill strong{font:700 27px 'Space Grotesk',sans-serif;color:var(--cyan)}
+.status-panel{background:linear-gradient(140deg,#102849,#0b1d38);border:1px solid var(--line);border-radius:18px;padding:19px 20px 13px}
+.panel-title{display:flex;justify-content:space-between;font-size:10px;letter-spacing:1.5px;font-weight:800;color:#b6c8e1}.live-dot{color:#6be0b5}
+.resource-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-top:20px}
+.resource{min-width:0;display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:7px;row-gap:5px}
+.resource-icon{font-size:17px}.resource-name{font-size:11px;color:#b5c8e1;white-space:nowrap}.resource strong{grid-column:1/-1;font:700 22px 'Space Grotesk',sans-serif}
+.meter{grid-column:1/-1;height:6px;border-radius:10px;background:#263e5e;overflow:hidden}.meter i{display:block;height:100%;width:70%;border-radius:10px;background:linear-gradient(90deg,#55dfe1,#7e9dff);transition:width .3s}
+.resource.low .meter i{background:var(--danger)}.resource.low strong{color:#ff9a9e}
+.scale-note{margin:14px 0 0;font-size:10px}
+.decision-heading{display:flex;justify-content:space-between;align-items:end;margin:28px 0 13px}.decision-heading .eyebrow{margin:0 0 5px}.decision-heading h3{margin:0;font:700 21px 'Space Grotesk',sans-serif}.choice-count{font-size:10px;color:var(--muted)}
+.decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.decision-card{display:flex;align-items:center;gap:12px;text-align:left;padding:14px;background:#0d2140;border:1px solid #25446b;border-radius:13px;color:var(--text);cursor:pointer;min-height:82px}
+.decision-card:hover:not(:disabled),.decision-card.selected{border-color:var(--cyan);background:#123153}
+.decision-card:disabled{opacity:.55;cursor:not-allowed}
+.decision-icon{font-size:25px;width:38px;height:38px;display:grid;place-items:center;background:#1b385d;border-radius:10px;flex-shrink:0}
+.decision-copy{display:grid;gap:5px;flex:1}.decision-copy strong{font-size:12px}.decision-copy small{font-size:10px;line-height:1.4;color:var(--muted)}
+.card-arrow{color:var(--cyan);font-size:19px}
+.feedback{margin-top:13px;padding:12px 14px;border:1px solid #38617c;border-radius:12px;background:#102d49;color:#c9f4f1;font-size:12px;line-height:1.5}
+.next-button{width:100%;margin-top:14px}.next-button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.instruction{text-align:center;margin:11px 0}.game-screen .text-button{margin:auto}
+#quit-mission{margin:5px auto 0}
+.result-screen{text-align:center;max-width:580px;margin:auto;padding-top:65px}.result-symbol{font-size:72px;margin-bottom:20px}.result-screen h2{font-size:40px}.result-message{color:var(--muted);line-height:1.7;max-width:470px;margin:15px auto 25px}
+.final-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:24px 0}.final-stat{background:#102849;border:1px solid var(--line);border-radius:11px;padding:12px 5px}.final-stat span{display:block;color:var(--muted);font-size:9px}.final-stat strong{display:block;font:700 20px 'Space Grotesk',sans-serif;margin-top:6px}
+.result-screen .button{min-width:220px}.result-screen .text-button{margin:8px auto}
+.site-footer{text-align:center;padding:20px 0 18px;color:#7189aa;font-size:9px;letter-spacing:1.3px}.site-footer span{color:var(--cyan);padding:0 5px}
+button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media(max-width:650px){
+ .app-shell{width:min(100% - 28px,520px)}.topbar{height:60px}.top-tag{font-size:8px;letter-spacing:1px}
+ .screen{padding:25px 0 20px}.welcome-screen{display:flex;flex-direction:column;justify-content:center;gap:20px;min-height:auto;padding-top:24px}
+ .hero-art{width:100%;height:260px;flex:none}.planet-main{width:155px;height:155px;top:70px}.planet-back{width:60px;height:60px;top:28px;right:30px}.orbit-ring{width:245px;height:72px;top:120px}.astronaut{font-size:65px;top:135px}.moon-rock{height:65px}.welcome-copy{padding:0 5px}.welcome-copy h1{font-size:39px;margin:10px 0}.intro{font-size:14px;margin:10px 0}.welcome-copy .button{width:100%}.welcome-footer{position:static;margin-top:4px;font-size:8px}
+ .mission-options{grid-template-columns:1fr}.mission-card{min-height:245px;padding:20px}.mission-planet{height:60px;font-size:50px}
+ .resource-grid{grid-template-columns:repeat(3,1fr);row-gap:17px}.resource{padding:2px 4px}.resource-name{font-size:10px}
+ .decision-grid{grid-template-columns:1fr}.decision-card{min-height:72px}.game-heading h2{font-size:27px}.muted{font-size:12px}
+ .final-stats{grid-template-columns:repeat(3,1fr)}.result-screen{padding-top:30px}.result-screen h2{font-size:34px}
+ .site-footer{line-height:1.8}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+// Orbit Builders - simple, illustrative resource-management game.
+const screens = {
+  welcome: document.getElementById("welcome-screen"),
+  selection: document.getElementById("selection-screen"),
+  game: document.getElementById("game-screen"),
+  result: document.getElementById("result-screen")
+};
+
+const initialResources = { oxygen: 80, water: 75, food: 70, energy: 75, health: 90 };
+const labels = { oxygen: "Oxygen", water: "Water", food: "Food", energy: "Energy", health: "Crew Health" };
+const actions = {
+  water: {
+    title: "Conserve water",
+    message: "Good planning! Reusing water and fixing leaks saves supplies.",
+    change: { water: 15, energy: -5 }
+  },
+  solar: {
+    title: "Repair solar panels",
+    message: "The panels are working better. Your base gains energy.",
+    change: { energy: 20, health: 2 }
+  },
+  food: {
+    title: "Grow food",
+    message: "Your indoor garden is growing. The crew has more food for later.",
+    change: { food: 17, water: -8, energy: -5 }
+  },
+  shield: {
+    title: "Improve radiation protection",
+    message: "The crew has a safer shelter. This costs materials and energy.",
+    change: { health: 15, energy: -10 }
+  }
+};
+
+let state = null;
+let selectedAction = null;
+
+function showScreen(name) {
+  Object.values(screens).forEach(screen => screen.classList.add("hidden"));
+  screens[name].classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function startMission(destination) {
+  state = {
+    destination,
+    day: 1,
+    resources: { ...initialResources },
+    maxDays: 7,
+    actionTaken: false
+  };
+  const isMars = destination === "mars";
+  if (isMars) {
+    state.resources.energy = 65;
+    state.resources.water = 65;
+    state.resources.health = 85;
+    state.maxDays = 7;
+  }
+  document.getElementById("base-title").textContent = isMars ? "Mars Base" : "Moon Base";
+  document.getElementById("base-subtitle").textContent = isMars
+    ? "A distant outpost needs careful supply planning."
+    : "A lunar research base needs careful energy and supply planning.";
+  selectedAction = null;
+  document.getElementById("feedback").classList.add("hidden");
+  document.getElementById("next-day").disabled = true;
+  updateDashboard();
+  resetActionCards();
+  showScreen("game");
+}
+
+function clamp(value) { return Math.max(0, Math.min(100, value)); }
+
+function updateDashboard() {
+  document.getElementById("day-number").textContent = state.day;
+  Object.entries(state.resources).forEach(([key, value]) => {
+    document.getElementById(`${key}-value`).textContent = value;
+    document.getElementById(`${key}-bar`).style.width = `${value}%`;
+    document.querySelector(`[data-resource="${key}"]`)?.classList.toggle("low", value <= 25);
+    const resourceEl = document.getElementById(`${key}-value`).closest(".resource");
+    resourceEl.classList.toggle("low", value <= 25);
+    resourceEl.setAttribute("aria-label", `${labels[key]}: ${value} out of 100`);
+  });
+  document.getElementById("choice-count").textContent = state.actionTaken ? "Action completed" : "Choose 1 action";
+}
+
+function resetActionCards() {
+  document.querySelectorAll(".decision-card").forEach(card => {
+    card.disabled = false;
+    card.classList.remove("selected");
+  });
+}
+
+function chooseAction(key, card) {
+  if (!state || state.actionTaken) return;
+  selectedAction = key;
+  const action = actions[key];
+  Object.entries(action.change).forEach(([resource, amount]) => {
+    state.resources[resource] = clamp(state.resources[resource] + amount);
+  });
+  state.actionTaken = true;
+  document.querySelectorAll(".decision-card").forEach(item => {
+    item.disabled = true;
+    item.classList.toggle("selected", item === card);
+  });
+  const feedback = document.getElementById("feedback");
+  feedback.textContent = `${action.title}: ${action.message} Your supplies will still be used overnight.`;
+  feedback.classList.remove("hidden");
+  document.getElementById("next-day").disabled = false;
+  updateDashboard();
+}
+
+function advanceDay() {
+  if (!state || !state.actionTaken) return;
+  // Daily use is deliberately simple and labelled as game-only values.
+  const dailyUse = state.destination === "mars"
+    ? { oxygen: -9, water: -9, food: -8, energy: -7, health: -2 }
+    : { oxygen: -8, water: -8, food: -7, energy: -6, health: -1 };
+  Object.entries(dailyUse).forEach(([key, amount]) => {
+    state.resources[key] = clamp(state.resources[key] + amount);
+  });
+  if (state.resources.oxygen <= 0 || state.resources.water <= 0 ||
+      state.resources.food <= 0 || state.resources.energy <= 0 ||
+      state.resources.health <= 0) {
+    finishMission(false);
+    return;
+  }
+  if (state.day >= state.maxDays) {
+    finishMission(true);
+    return;
+  }
+  state.day += 1;
+  state.actionTaken = false;
+  selectedAction = null;
+  document.getElementById("feedback").classList.add("hidden");
+  document.getElementById("next-day").disabled = true;
+  resetActionCards();
+  updateDashboard();
+}
+
+function finishMission(success) {
+  showScreen("result");
+  document.getElementById("result-symbol").textContent = success ? "🏆" : "🛰️";
+  document.getElementById("result-eyebrow").textContent = success ? "MISSION COMPLETE" : "MISSION ENDED";
+  document.getElementById("result-title").textContent = success ? "Mission Success!" : "Mission Failed";
+  const message = success
+    ? `You kept ${state.destination === "mars" ? "Mars Base" : "Moon Base"} operating for ${state.maxDays} days. Great command work! You balanced supplies and protected your crew.`
+    : "One or more important resources reached zero. The crew could not safely continue. Try again and plan how each choice affects your supplies.";
+  document.getElementById("result-message").textContent = message;
+  document.getElementById("final-stats").innerHTML = Object.entries(state.resources)
+    .map(([key, value]) => `<div class="final-stat"><span>${labels[key]}</span><strong>${value}</strong></div>`).join("");
+}
+
+document.getElementById("start-button").addEventListener("click", () => showScreen("selection"));
+document.getElementById("back-welcome").addEventListener("click", () => showScreen("welcome"));
+document.querySelectorAll(".mission-card").forEach(card => {
+  card.addEventListener("click", () => startMission(card.dataset.mission));
+});
+document.querySelectorAll(".decision-card").forEach(card => {
+  card.addEventListener("click", () => chooseAction(card.dataset.action, card));
+});
+document.getElementById("next-day").addEventListener("click", advanceDay);
+document.getElementById("quit-mission").addEventListener("click", () => showScreen("selection"));
+document.getElementById("restart-button").addEventListener("click", () => startMission(state.destination));
+document.getElementById("choose-again").addEventListener("click", () => showScreen("selection"));
